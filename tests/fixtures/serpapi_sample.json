@@ -1,0 +1,35 @@
+{
+  "best_flights": [
+    {
+      "flights": [
+        {"airline": "Aeromexico"},
+        {"airline": "China Southern"}
+      ],
+      "layovers": [{"name": "Mexico City", "id": "MEX"}],
+      "total_duration": 1920,
+      "price": 68940
+    },
+    {
+      "flights": [
+        {"airline": "Volaris"},
+        {"airline": "Hainan Airlines"}
+      ],
+      "layovers": [{"name": "Xi'an", "id": "XIY"}],
+      "total_duration": 2040,
+      "price": 73800
+    }
+  ],
+  "other_flights": [
+    {
+      "flights": [{"airline": "United"}, {"airline": "Air China"}],
+      "layovers": [{"name": "Los Angeles", "id": "LAX"}, {"name": "Beijing", "id": "PEK"}],
+      "total_duration": 2200,
+      "price": 81000
+    }
+  ],
+  "price_insights": {
+    "lowest_price": 68940,
+    "price_level": "low",
+    "typical_price_range": [74400, 93600]
+  }
+}
