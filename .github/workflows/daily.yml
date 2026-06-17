@@ -1,0 +1,32 @@
+name: Daily flight price check
+
+on:
+  schedule:
+    - cron: "0 17 * * *"   # 17:00 UTC ≈ 09:00 Tijuana in winter (PST)
+  workflow_dispatch:        # allow manual run from the Actions tab
+
+permissions:
+  contents: write           # needed to commit price_history.csv back
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Run tracker
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m src.main
+      - name: Commit updated history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/price_history.csv
+          git diff --staged --quiet || git commit -m "data: price history $(date -u +%F)"
+          git push
