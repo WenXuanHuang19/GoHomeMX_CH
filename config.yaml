@@ -1,0 +1,18 @@
+enabled: true
+origin: TIJ
+destinations: [CAN, SZX]
+passengers: 3
+currency: MXN
+# SerpAPI Google Flights returns the price for the whole party when adults>1.
+# If verification shows it returns per-person, set this to false.
+price_is_total: true
+date_pairs:
+  - {depart: "2026-12-28", return: "2027-02-16"}
+  - {depart: "2026-12-28", return: "2027-02-17"}
+  - {depart: "2026-12-29", return: "2027-02-16"}
+  - {depart: "2026-12-29", return: "2027-02-17"}
+drop_alert_pct: 8
+# Months >= this number are "决策期" (full daily advice); earlier months are
+# "观察期" (still daily, just labelled "暂不计划购买"). Oct = 10.
+decision_phase_start_month: 10
+history_path: data/price_history.csv
