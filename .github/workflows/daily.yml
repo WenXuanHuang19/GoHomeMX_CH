@@ -1,9 +1,11 @@
 name: Daily flight price check
 
 on:
-  schedule:
-    - cron: "37 18 * * *"   # 18:37 UTC = 11:37 Tijuana 夏令 (PDT) / 10:37 冬令 (PST)。错开整点降低 GitHub 吞 cron 概率。
-  workflow_dispatch:        # allow manual run from the Actions tab
+  # 触发源: cron-job.org 每天 11:30 America/Tijuana 通过 GitHub REST API
+  # 调用 workflow_dispatch (POST /actions/workflows/daily.yml/dispatches)。
+  # 弃用 GitHub 自家 schedule 的原因: 2026-06-18 至 06-19 实测,免费层
+  # schedule 触发不可靠 —— 06-18 完全没触发, 06-19 延迟 1h40min。
+  workflow_dispatch:
 
 permissions:
   contents: write           # needed to commit price_history.csv back
