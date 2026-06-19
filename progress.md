@@ -2,23 +2,28 @@
 
 > 下次对话:让 Claude **先读这个文件**,即可继续作业。
 
-最后更新:2026-06-18(第二天复盘)
+最后更新:2026-06-19(第三天:换触发源)
 
-## 当前状态:🚀 已上线,全自动运行中
+## 当前状态:🚀 已上线,cron-job.org 触发,全自动运行中
 
-- ✅ 代码全部完成,9 个 commit,已 push 到公开仓库
-  https://github.com/WenXuanHuang19/GoHomeMX_CH
-- ✅ 23/23 测试通过
-- ✅ GitHub Actions cron 已生效;手动触发首跑(2026-06-17 21:21 UTC)成功(52 秒)
-- ⏰ 2026-06-18 cron 改为 `37 18 * * *`(18:37 UTC ≈ Tijuana 11:37 夏 / 10:37 冬),错开整点降低被 GitHub 吞掉的概率 → 见下方"事故复盘"
-- ✅ Telegram 推送收到(用户确认)
-- ✅ 3 人单人价 ~MXN 28,000,与 Google Flights 网页一致 → `price_is_total: true` 假设正确,不动
-- ✅ `data/price_history.csv` 已被 GitHub Actions 自动 commit 回仓库(commit `f0e0003`)
+- ✅ 代码完成 + 23/23 测试通过 + 公开仓库 https://github.com/WenXuanHuang19/GoHomeMX_CH
+- ✅ 3 人单人价 ~MXN 28,000,与 Google Flights 网页一致 → `price_is_total: true` 不动
+- ✅ `data/price_history.csv` 由 GitHub Actions 自动 commit 回仓库(commit `f0e0003`、`5d02736`、`845334b`、`c1012e3` 等)
 
-后续无需写代码,系统会:
-- 每天约 17:00 UTC(≈ Tijuana 冬令 9:00 / 夏令 10:00)自动跑
-- Telegram 每天推一条
-- 历史每天累积到云端 CSV
+**触发架构(2026-06-19 改)**:
+- **cron-job.org** (免费、可靠) 每天 **11:30 America/Tijuana**(DST 稳定,不受夏冬令影响)
+  通过 GitHub REST API `POST /repos/.../actions/workflows/daily.yml/dispatches` 触发 `workflow_dispatch`
+- GitHub 自家 `schedule:` 已从 yaml 删除(commit `d517a2b`)
+- 详细原因见下方"2026-06-19 架构迁移复盘"
+
+**外部依赖**(都有过期日,过期前要续):
+- cron-job.org 账户(免费)
+- GitHub PAT `GoHomeMX_cron_trigger`(fine-grained, repo=GoHomeMX_CH, Actions=write+Metadata=read)
+  **到期 2027-01-12 08:00 UTC** —— 比用户回程 2027-02-12+ 早,但用户买票期在 12 月之前,无影响
+- cron-job.org schedule 自身的过期日:2027-01-01(用户当时未改;到期前要么续期要么停用,反正那时票早买完)
+
+⚠️ **PAT 部分泄露**:2026-06-19 配置过程中,cron-job.org 截图把 Authorization header 前段 (`github_pat_11BB3UH5Y02pMjHFscw...`) 露在了对话里。
+完整 token 没露,理论上不可用。**保守做法**:近期 revoke 这个 token,在 https://github.com/settings/personal-access-tokens 找 `GoHomeMX_cron_trigger` → Revoke → 重新生成,回 cron-job.org Header 替换 Bearer 后那串即可。
 
 ## ⚠️ 唯一待观察的问题:`price_insights` 缺失
 
@@ -34,6 +39,34 @@ SerpAPI 没返回 Google 的"偏低/正常/偏高"信号。
 - 尝试改 SerpAPI 参数(如加 `hl=zh`, `gl=mx`)、换路线参数试探,看能不能触发 Google 给信号。
 
 复查时间点:**约 2026-06-20**。届时检查最近 3 天 CSV 是否仍全空,再决定。
+
+## 🔄 2026-06-19 架构迁移复盘:换触发源到 cron-job.org
+
+**起因**:连续两天观察 GitHub Actions schedule 表现极差。
+- 2026-06-18 17:00 UTC cron:**完全没触发**(到 19:55 UTC 查 `gh run list`,0 条 schedule 事件)
+- 2026-06-19 18:37 UTC cron:**延迟 1h40min 才跑**(实际 20:17:59 UTC)
+
+诊断过程中一度误判"GitHub 从不触发",但今天 13:18 用户发现 Telegram 收到了消息,
+查 `gh run list` 确认是延迟触发。修正结论:**GitHub 免费层 schedule = 时灵时不灵 + 严重延迟**,
+跟"消息每天准时到"的需求不兼容。
+
+**决策**:走方案 C —— 用 cron-job.org(免费)外部触发器调 GitHub API。
+- 优点:cron-job.org 准时(±数秒)、时区设 America/Tijuana 不受 DST 影响、不占 SerpAPI 额度(还是一天 8 次)
+- 代价:多一个外部账户 + 一个 GitHub PAT 要管理
+
+**实施**(2026-06-19):
+1. 在 github.com/settings/personal-access-tokens/new 生成 fine-grained PAT(只对 GoHomeMX_CH,Actions: read+write)
+2. 在 cron-job.org 建任务: POST `https://api.github.com/repos/WenXuanHuang19/GoHomeMX_CH/actions/workflows/daily.yml/dispatches`
+   - Headers: `Accept: application/vnd.github+json` + `Authorization: Bearer <PAT>` + `X-GitHub-Api-Version: 2022-11-28` + `Content-Type: application/json`
+   - Body: `{"ref":"main"}`
+   - Schedule: every day 11:30 America/Tijuana
+3. Test run 成功(HTTP 204 + 新 workflow_dispatch run #27851122252 + Telegram 收到)
+4. 删除 yaml 里的 `schedule:` 块,只留 `workflow_dispatch:` (commit `d517a2b`)
+
+**为什么不双触发**:每次 workflow 跑 8 次 SerpAPI。双触发(GitHub schedule + cron-job.org)= 16/天 = 480/月,爆免费额度 250。
+要双触发只能加代码侧"今天已有数据就跳过 SerpAPI"的去重,工作量不值。
+
+---
 
 ## 📋 2026-06-18 事故复盘:cron 被吞 + 改时间
 
