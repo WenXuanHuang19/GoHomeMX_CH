@@ -924,3 +924,11 @@ checked_at,depart_date,return_date,destination,currency,lowest_overall_pp,price_
 2026-10-18,2026-12-29,2027-02-16,SZX,MXN,29840.33,,,,29840.33,1次中转(Beijing Capital International Airport) 19h50m · Hainan
 2026-10-18,2026-12-29,2027-02-17,CAN,MXN,29726.0,,,,29726.0,1次中转(Beijing Capital International Airport) 18h50m · Hainan
 2026-10-18,2026-12-29,2027-02-17,SZX,MXN,29840.33,,,,29840.33,1次中转(Beijing Capital International Airport) 19h50m · Hainan
+2026-10-19,2026-12-28,2027-02-16,CAN,MXN,29630.67,,,,29630.67,1次中转(Beijing Capital International Airport) 18h55m · Hainan
+2026-10-19,2026-12-28,2027-02-16,SZX,MXN,29745.0,,,,29745.0,1次中转(Beijing Capital International Airport) 19h50m · Hainan
+2026-10-19,2026-12-28,2027-02-17,CAN,MXN,29595.67,,,,29595.67,1次中转(Beijing Capital International Airport) 18h55m · Hainan
+2026-10-19,2026-12-28,2027-02-17,SZX,MXN,29745.0,,,,29745.0,1次中转(Beijing Capital International Airport) 19h50m · Hainan
+2026-10-19,2026-12-29,2027-02-16,CAN,MXN,29630.67,,,,29630.67,1次中转(Beijing Capital International Airport) 18h50m · Hainan
+2026-10-19,2026-12-29,2027-02-16,SZX,MXN,29745.0,,,,29745.0,1次中转(Beijing Capital International Airport) 19h50m · Hainan
+2026-10-19,2026-12-29,2027-02-17,CAN,MXN,29630.67,,,,29630.67,1次中转(Beijing Capital International Airport) 18h50m · Hainan
+2026-10-19,2026-12-29,2027-02-17,SZX,MXN,29710.33,,,,29710.33,1次中转(Beijing Capital International Airport) 24h00m · Hainan
