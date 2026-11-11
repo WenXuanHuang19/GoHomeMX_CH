@@ -1065,3 +1065,8 @@ checked_at,depart_date,return_date,destination,currency,lowest_overall_pp,price_
 2026-11-10,2026-12-28,2027-02-17,CAN,MXN,35229.0,,,,35229.0,1次中转(Beijing Capital International Airport) 18h55m · Hainan
 2026-11-10,2026-12-28,2027-02-17,SZX,MXN,35254.0,,,,35254.0,1次中转(Beijing Capital International Airport) 19h50m · Hainan
 2026-11-10,2026-12-29,2027-02-17,SZX,MXN,67752.67,,,,,3次中转(Mexico City International Airport Benito Juárez/Frankfurt Airport/Kuala Lumpur International Airport) 44h46m · Aeromexico/Lufthansa/Shenzhen
+2026-11-11,2026-12-28,2027-02-16,CAN,MXN,37227.0,,,,37227.0,1次中转(Beijing Capital International Airport) 18h55m · Hainan
+2026-11-11,2026-12-28,2027-02-16,SZX,MXN,37362.0,,,,37362.0,1次中转(Beijing Capital International Airport) 19h50m · Hainan
+2026-11-11,2026-12-28,2027-02-17,CAN,MXN,37302.33,,,,37302.33,1次中转(Beijing Capital International Airport) 18h55m · Hainan
+2026-11-11,2026-12-28,2027-02-17,SZX,MXN,37362.0,,,,37362.0,1次中转(Beijing Capital International Airport) 19h50m · Hainan
+2026-11-11,2026-12-29,2027-02-17,SZX,MXN,74998.0,,,,,3次中转(Mexico City International Airport Benito Juárez/Los Angeles International Airport/Taiwan Taoyuan International Airport) 38h26m · Aeromexico/China Airlines
