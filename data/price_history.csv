@@ -1099,3 +1099,9 @@ checked_at,depart_date,return_date,destination,currency,lowest_overall_pp,price_
 2026-11-16,2026-12-28,2027-02-17,SZX,MXN,38759.0,,,,38759.0,1次中转(Beijing Capital International Airport) 19h50m · Hainan
 2026-11-16,2026-12-29,2027-02-16,CAN,MXN,99187.0,,,,,2次中转(Mexico City International Airport Benito Juárez/Vancouver International Airport) 28h16m · Aeromexico/China Southern
 2026-11-16,2026-12-29,2027-02-17,CAN,MXN,158313.33,,,,,2次中转(Mexico City International Airport Benito Juárez/Vancouver International Airport) 28h16m · Aeromexico/China Southern
+2026-11-17,2026-12-28,2027-02-16,CAN,MXN,38700.33,,,,38700.33,1次中转(Beijing Capital International Airport) 18h55m · Hainan
+2026-11-17,2026-12-28,2027-02-16,SZX,MXN,38359.33,,,,38359.33,1次中转(Beijing Capital International Airport) 19h50m · Hainan
+2026-11-17,2026-12-28,2027-02-17,CAN,MXN,38302.0,,,,38302.0,1次中转(Beijing Capital International Airport) 18h55m · Hainan
+2026-11-17,2026-12-28,2027-02-17,SZX,MXN,38758.67,,,,38758.67,1次中转(Beijing Capital International Airport) 19h50m · Hainan
+2026-11-17,2026-12-29,2027-02-16,CAN,MXN,99186.0,,,,,2次中转(Mexico City International Airport Benito Juárez/Vancouver International Airport) 28h16m · Aeromexico/China Southern
+2026-11-17,2026-12-29,2027-02-17,CAN,MXN,163258.0,,,,,2次中转(Mexico City International Airport Benito Juárez/Vancouver International Airport) 28h16m · Aeromexico/China Southern
